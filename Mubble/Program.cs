@@ -1,9 +1,10 @@
 ﻿using Mubble.Core;
 using Mubble.Core.Events;
-using Mubble.Core.Func;
 using Mubble.Core.Logger;
 using System;
+using System.IO;
 using System.Reactive.Linq;
+using System.Reflection;
 
 namespace Mubble
 {
@@ -11,12 +12,24 @@ namespace Mubble
     {
         static void Main(string[] args)
         {
+            CreatePluginsFolder();
 
             var host = new Host();
             SubscribeLogs(host);
             host.Start();
 
             Console.ReadKey();
+        }
+
+        private static string GetRunningDirectory()
+        {
+            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        }
+
+        private static void CreatePluginsFolder()
+        {
+            var path = GetRunningDirectory() + "/Plugins";
+            Directory.CreateDirectory(path);
         }
 
         private static void SubscribeLogs(IMubbleHost host)

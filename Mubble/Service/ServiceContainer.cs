@@ -7,6 +7,7 @@ using Mubble.Core.ServiceContainer;
 using System.Reactive.Linq;
 using Mubble.Core.Events;
 using static Mubble.Core.Events.EventsType.ServiceContainer;
+using Mubble.Core.Plugin;
 
 namespace Mubble.Service
 {
@@ -14,12 +15,12 @@ namespace Mubble.Service
     {
         private const string EventSourceName = "INTERNAL.ServiceContainer";
 
-        private readonly Dictionary<Type, object> _container;
+        private readonly Dictionary<Type, Implementation> _container;
         private readonly IMubbleHost _host;
 
         public ServiceContainer(IMubbleHost host)
         {
-            _container = new Dictionary<Type, object>();
+            _container = new Dictionary<Type, Implementation>();
             _host = host;
         }
 
@@ -34,9 +35,9 @@ namespace Mubble.Service
         {
             value = default(T);
 
-            if(_container.TryGetValue(typeof(T), out var obj) && obj is T)
+            if(_container.TryGetValue(typeof(T), out var obj) && obj.Value is T)
             {
-                value = (T)obj;
+                value = (T)obj.Value;
                 return true;
             }
 
@@ -47,13 +48,13 @@ namespace Mubble.Service
         {
             var key = typeof(T);
 
-            if (_container.TryGetValue(key, out var obj) && obj is T)
-                return Option.Some((T)obj);
+            if (_container.TryGetValue(key, out var obj) && obj.Value is T)
+                return Option.Some((T)obj.Value);
 
             return Option.None<T>();
         }
 
-        public bool RegisterService<T>(object serviceImplementation)
+        public bool RegisterService<T>(object serviceImplementation, SemVersion version)
         {
             if (!(serviceImplementation is T))
             {
@@ -63,7 +64,7 @@ namespace Mubble.Service
 
             var isOverride = HasService<T>();
 
-            _container[typeof(T)] = serviceImplementation;
+            _container[typeof(T)] = new Implementation(serviceImplementation, version);
             EmitEvent(REGISTER, SCPayload.Create((T)serviceImplementation, isOverride));
 
             return true;
@@ -77,13 +78,8 @@ namespace Mubble.Service
             return success;
         }
 
-        public bool HasCollection(IEnumerable<Type> serviceList)
-        {
-            return ServiceTypes.Count(x => serviceList.Contains(x)) == serviceList.Count();
-        }
-
         public IEnumerable<Type> ServiceTypes => _container.Keys;
-        public IEnumerable<object> ServiceImplementations => _container.Values;
+        public IEnumerable<Implementation> ServiceImplementations => _container.Values;
 
         public IObservable<MubbleEvent<SCPayload>> Events
             => _host.Events
@@ -96,6 +92,14 @@ namespace Mubble.Service
                 type,
                 EventSourceName,
                 payload);
+        }
+
+        public int MatchService<T>(SemVersion version)
+        {
+            if (!HasService<T>()) return 0;
+
+            var current = _container[typeof(T)];
+            return current.Version.IsCompatible(version) ? 1 : -1;
         }
     }
 }

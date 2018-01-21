@@ -1,5 +1,6 @@
 ﻿using Mubble.Core.Func;
 using Mubble.Core.Events;
+using Mubble.Core.Plugin;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace Mubble.Core.ServiceContainer
         /// <summary>
         /// Collection of implementations
         /// </summary>
-        IEnumerable<object> ServiceImplementations { get; }
+        IEnumerable<Implementation> ServiceImplementations { get; }
         /// <summary>
         /// Collection of services types
         /// </summary>
@@ -36,20 +37,24 @@ namespace Mubble.Core.ServiceContainer
         /// </summary>
         /// <typeparam name="T">Type of service to register</typeparam>
         /// <param name="serviceImplementation">service implementation</param>
+        /// <param name="version">version of implementation</param>
         /// <returns>True if successfully register, false otherwise</returns>
-        bool RegisterService<T>(object serviceImplementation);
+        bool RegisterService<T>(object serviceImplementation, SemVersion version);
         /// <summary>
         /// Remove a service implementation
         /// </summary>
         /// <typeparam name="T">Type of service</typeparam>
         /// <returns>True if removed, false otherwise</returns>
         bool RemoveService<T>();
+
         /// <summary>
-        /// Check if container has all types in collection
+        /// Check if service implementation is present and is version compatible
         /// </summary>
-        /// <param name="serviceList"></param>
-        /// <returns></returns>
-        bool HasCollection(IEnumerable<Type> serviceList);
+        /// <typeparam name="T">type of service</typeparam>
+        /// <param name="version">min version of service</param>
+        /// <returns>0 if not present, -1 if versions are incompatible and 1 if OK</returns>
+        int MatchService<T>(SemVersion version);
+
         /// <summary>
         /// Service container events
         /// </summary>

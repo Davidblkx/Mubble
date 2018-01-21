@@ -49,7 +49,7 @@ namespace Mubble
         public void Start()
         {
             EmitEvent(INIT, "HOST");
-            EmitEvent(LOG, "HOST", GetInfo("Mubble initialized"));
+            EmitEvent(LOG, "HOST", GetInfoLog("Mubble initialized"));
         }
     }
 }

@@ -59,8 +59,8 @@ namespace Mubble.Test
                     None: Assert.Fail,
                     Some: s => Assert.AreEqual(valString, s));
 
-            Option
-                .None<int>()
+
+            None<int>()
                 .Cast(toDouble)
                 .Match(
                     None: () => { },
