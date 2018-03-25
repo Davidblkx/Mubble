@@ -4,6 +4,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Mubble.Core;
 using Mubble.Core.Events;
+using Mubble.Core.Plugin;
 using Mubble.Core.ServiceContainer;
 using Mubble.Service;
 
@@ -19,6 +20,9 @@ namespace Mubble
             Events = InitEvents();
             ServiceContainer = new ServiceContainer(this);
         }
+
+        public SemVersion Version
+            => new SemVersion(0, 0, 1);
 
         private IObserver<IMubbleEvent> EventSource { get; set; }
         public IObservable<IMubbleEvent> Events { get; }
@@ -48,8 +52,15 @@ namespace Mubble
 
         public void Start()
         {
+            LoadInternalPlugins();
             EmitEvent(INIT, "HOST");
             EmitEvent(LOG, "HOST", GetInfoLog("Mubble initialized"));
+        }
+
+        //Load plugins built internly
+        private void LoadInternalPlugins()
+        {
+            ConfigManager.RegisterService(this);
         }
     }
 }

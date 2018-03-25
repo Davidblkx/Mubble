@@ -67,6 +67,9 @@ namespace Mubble.Core.Func
 
         public static Option None()
             => new Option(null);
+
+        public static Option Some(object instance)
+            => new Option(instance);
     }
 
     /// <summary>

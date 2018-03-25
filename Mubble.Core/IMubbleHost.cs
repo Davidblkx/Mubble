@@ -1,11 +1,17 @@
 ﻿using System;
 using Mubble.Core.Events;
+using Mubble.Core.Plugin;
 using Mubble.Core.ServiceContainer;
 
 namespace Mubble.Core
 {
     public interface IMubbleHost
     {
+        /// <summary>
+        /// Current version of Mubble
+        /// </summary>
+        SemVersion Version { get; }
+
         /// <summary>
         /// Observer of events
         /// </summary>

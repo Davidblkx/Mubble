@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mubble", "Mubble\Mubble.csproj", "{ABDE05A9-4555-4812-AD11-5DDA9B63EE92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mubble", "Mubble\Mubble.csproj", "{ABDE05A9-4555-4812-AD11-5DDA9B63EE92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mubble.Core", "Mubble.Core\Mubble.Core.csproj", "{15D14C82-211D-4FB3-90B3-AFA698EACF54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mubble.Core", "Mubble.Core\Mubble.Core.csproj", "{15D14C82-211D-4FB3-90B3-AFA698EACF54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mubble.Test", "Mubble.Test\Mubble.Test.csproj", "{01E14F79-57FC-4E98-ADA6-9B356EB57AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mubble.Test", "Mubble.Test\Mubble.Test.csproj", "{01E14F79-57FC-4E98-ADA6-9B356EB57AA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{C3CDFF1E-D26C-4514-A1CB-D89B8819897D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigManager", "Plugins\ConfigManager\ConfigManager.csproj", "{1FD48D51-0CDF-4481-9F9B-83216A06E5B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +31,16 @@ Global
 		{01E14F79-57FC-4E98-ADA6-9B356EB57AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01E14F79-57FC-4E98-ADA6-9B356EB57AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01E14F79-57FC-4E98-ADA6-9B356EB57AA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FD48D51-0CDF-4481-9F9B-83216A06E5B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FD48D51-0CDF-4481-9F9B-83216A06E5B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FD48D51-0CDF-4481-9F9B-83216A06E5B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FD48D51-0CDF-4481-9F9B-83216A06E5B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1FD48D51-0CDF-4481-9F9B-83216A06E5B1} = {C3CDFF1E-D26C-4514-A1CB-D89B8819897D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A9C1DC4-88B1-43EF-B45F-C1D4361F47CB}

@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 namespace Mubble.Core.Config
 {
     /// <summary>
-    /// Handles read/write of app configuration
+    /// A key-value store to contain application and plugins settings
     /// </summary>
     public interface IConfigManager
     {
         string ConfigFilePath { get; }
 
-        Task<Option<T>> Get<T>(string key);
-        Task Set<T>(string key, T value);
-        Task<bool> Delete<T>(string key);
-        Task<bool> IsAvaible<T>(string key);
+        Option<T> Get<T>(string key);
+        void Set<T>(string key, T value);
+        bool Delete(string key);
+        bool IsAvaible(string key);
     }
 }
