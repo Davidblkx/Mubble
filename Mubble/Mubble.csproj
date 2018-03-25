@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Mubble.Core\Mubble.Core.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="$(SolutionDir)\build.ps1" />
+  </Target>
+
 </Project>
